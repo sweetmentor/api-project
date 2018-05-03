@@ -1,21 +1,32 @@
 let request = new XMLHttpRequest();
+let city = "Dublin";
+let APIKEY = "9b6e9334febd361b203e92c066725b28";
 
 function displayNicely(apiData) {
     let newData = JSON.parse(apiData);
-    let htmlString = "<div><strong>City:</strong> " + newData.name + "</div>";  
+    console.log(newData);
+    let htmlString = "<div><strong>City:</strong> " + newData.name + "</div>";
     htmlString += "<div><strong>Current Weather:</strong> " + newData.weather[0].description + "</div>";
-    htmlString += "<div><strong>Temperature:</strong> " + newData.main.temp + "</div>";
-    htmlString += "<div><strong>Humidity:</strong> " + newData.main.humidity+ "</div>";
-  
-    
-    document.getElementById("data").innerHTML = htmlString
+    htmlString += "<div><strong>Temperature:</strong> " + (+newData.main.temp - 273.15).toFixed(2) + "</div>";
+    document.getElementById("data").innerHTML = htmlString;
+}
+
+function submitCity() {
+    city = document.getElementById("cityForm")["city"].value;
+    request.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKEY)
+
+        request.send();
 }
 
 request.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         displayNicely(this.responseText);
     }
+    if (this.readyState == 4 && this.status == 404) {
+        document.getElementById("data").innerHTML = "<strong>City not found. Please try again!</strong>";
+    }
 }
-let appKey = "6ebea87dfc131fd5402906ce4b098ab8"
-request.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=Dublin&APPID=")
-request.send()
+
+request.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKEY);
+
+request.send();

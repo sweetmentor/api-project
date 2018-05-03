@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather API</title>
     <script type="text/javascript" src="api2.js"></script>
-    <title>Document</title>
+    <style type="text/css">
+         .information{
+            background-color: skyblue;
+        }
+        button {
+            color: magenta;
+        }
+    </style>
 </head>
+
 <body>
+    <div class="information">
+    <form id="cityForm">
+        <input name="city" type="text" />
+    </form>
+    <button id="submit" onclick="submitCity()">Check</button>
     <div id="data"></div>
-    
+    </div>
 </body>
+
 </html>
